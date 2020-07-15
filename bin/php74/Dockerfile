@@ -49,6 +49,12 @@ RUN apt-get update && \
     pecl install imagick && \
     docker-php-ext-enable imagick
 
+# imap depend on libc-client-dev and libkrb5-dev
+RUN apt update && apt install -y --no-install-recommends \
+        libc-client-dev \
+        libkrb5-dev
+
+
 # Other PHP7 Extensions
 
 RUN docker-php-ext-install pdo_mysql && \
@@ -61,7 +67,7 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install -j$(nproc) intl && \
     docker-php-ext-install mbstring && \
     docker-php-ext-install gettext && \
-    docker-php-ext-install imap && \
+    PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-ssl && docker-php-ext-install -j$(nproc) imap
     docker-php-ext-install exif
 
 
