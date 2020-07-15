@@ -140,9 +140,9 @@ May differ for PHP Verions <7.x.x
 * xmlrpc
 * gd
 
-> If you want to install more extension, just update `./bin/webserver/Dockerfile`. You can also generate a PR and we will merge if it seems good for general purpose.
-> You have to rebuild the docker image by running `docker-compose build` and restart the docker containers.
-
+> If you want to install more extension, just update `./bin/webserver/Dockerfile`. You can also generate a PR and we will merge if it seems good for general purpose.   
+> You have to rebuild the docker image by running `docker-compose build` and restart the docker containers.     
+> This service is dependent on `certs` service which generates the SSL certificates at the build time.  
 ## phpMyAdmin
 
 phpMyAdmin is configured to run on port 8080. Use following default credentials.
@@ -154,6 +154,32 @@ password: tiger
 ## Redis
 
 It comes with Redis. It runs on default port `6379`.
+
+
+## SSL Certificate generation
+
+It has an image which uses OpenSSL to generate the ssl certificates at the build time. It has following configuration variables available and you can customize them by overwriting in your own .env file.
+
+_**COUNTRY**_
+
+A two-letter country code. e.g. IN, US etc.
+
+_**STATE**_
+
+Full name of the state.
+
+_**CITY**_
+
+Full name of the city.
+
+_**ORG_NAME**_
+
+Legal name under which your organization is registered.
+
+_**COMMON_NAME**_
+
+The common name is the fully qualified domain name. e.g. www.example.com
+
 
 ## Contributing
 We are happy if you want to create a pull request or help people with their issues. If you want to create a PR, please remember that this stack is not built for production usage, and changes should good for general purpose and not overspecialized. 
